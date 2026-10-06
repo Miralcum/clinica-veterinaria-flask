@@ -1,0 +1,186 @@
+/* ===== Clínica Veterinaria Patitas · estilo tarjeta azul ===== */
+:root {
+  --azul: #0a74c4;
+  --azul-oscuro: #075d9e;
+  --azul-claro: #e8f2fb;
+  --gris-fondo: #eef0f3;
+  --gris-seccion: #f1f2f4;
+  --gris-borde: #dfe3e8;
+  --texto: #1f2328;
+  --texto-suave: #6b7280;
+  --rojo: #c62828;
+  --radio: 18px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Roboto", Arial, sans-serif;
+  color: var(--texto);
+  background: var(--gris-fondo);
+}
+
+.fondo { min-height: 100vh; padding: 40px 16px; }
+
+.tarjeta {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 28px;
+  padding: 24px 28px 16px;
+  box-shadow: 0 10px 30px rgba(15, 30, 60, .08);
+}
+
+a { color: inherit; text-decoration: none; }
+.icono { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
+
+/* ---------- Encabezado ---------- */
+.encabezado { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.marca { display: flex; align-items: center; gap: 14px; }
+.marca-nombre { font-size: 1.15rem; font-weight: 500; }
+
+.logo, .logo-grande {
+  display: grid; place-items: center;
+  background: var(--azul); border-radius: 50%;
+}
+.logo { width: 44px; height: 44px; }
+.logo svg { width: 26px; fill: #fff; }
+.logo-grande { width: 96px; height: 96px; }
+.logo-grande svg { width: 56px; fill: #fff; }
+
+.menu-usuario { position: relative; }
+.menu-usuario summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: .95rem; padding: 6px 8px; border-radius: 8px; }
+.menu-usuario summary::-webkit-details-marker { display: none; }
+.menu-usuario summary:hover { background: var(--gris-seccion); }
+.menu-usuario[open] .flecha { transform: rotate(180deg); }
+.menu-opciones {
+  position: absolute; right: 0; top: 110%; z-index: 10;
+  background: #fff; border: 1px solid var(--gris-borde); border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08); min-width: 210px; overflow: hidden;
+}
+.menu-opciones a { display: block; padding: 10px 14px; font-size: .9rem; }
+.menu-opciones a:hover { background: var(--azul-claro); color: var(--azul-oscuro); }
+
+/* ---------- Portada (banner) ---------- */
+.portada {
+  position: relative; height: 190px; border-radius: 4px;
+  background: #cfd8e3 center/cover no-repeat;
+  margin-bottom: 20px;
+}
+.portada-logo {
+  position: absolute; left: 24px; top: 0; bottom: 0;
+  background: #fff; width: 140px; display: grid; place-items: start center; padding-top: 0;
+}
+.portada-logo .logo-grande { margin-top: -0px; width: 120px; height: 120px; }
+.portada-logo .logo-grande svg { width: 70px; }
+.portada-acciones { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; }
+.circulo {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--azul); color: #fff; font-size: 1.1rem; font-weight: 700;
+  box-shadow: 0 0 0 2px #fff;
+}
+.circulo .icono { width: 15px; height: 15px; }
+
+/* ---------- Avatares ---------- */
+.subtitulo { font-size: 1rem; font-weight: 400; margin: 0 0 12px; }
+.avatares { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 20px; }
+.avatar { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: .85rem; }
+.avatar img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gris-borde); transition: border-color .2s, transform .2s; }
+.avatar:hover img { border-color: var(--azul); transform: translateY(-2px); }
+
+/* ---------- Filtros ---------- */
+.filtros { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+.filtros input, .filtros select { flex: 1 1 200px; }
+
+/* ---------- Sección colapsable (gris) ---------- */
+.seccion { margin-bottom: 20px; }
+.seccion > summary {
+  list-style: none; cursor: pointer;
+  background: var(--gris-seccion); padding: 14px 16px; font-size: 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.seccion > summary::-webkit-details-marker { display: none; }
+.signo::after { content: "+"; font-size: 1.3rem; font-weight: 500; }
+.seccion[open] .signo::after { content: "—"; font-size: 1rem; }
+
+/* ---------- Tarjetas de cita ---------- */
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding-top: 18px; }
+.cita {
+  position: relative; border: 1.5px solid var(--azul); border-radius: 6px;
+  padding: 20px 16px 16px; display: flex; flex-direction: column;
+}
+.cita-etiqueta { padding-top: 30px; }
+.etiqueta {
+  position: absolute; top: -1px; left: -1px;
+  background: var(--azul); color: #fff; font-size: .72rem;
+  padding: 4px 10px; border-radius: 6px 0 6px 0;
+}
+.etiqueta-fija { position: static; display: inline-block; border-radius: 6px; }
+.cita-cabeza { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+.cita-cabeza img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+.cita h3 { margin: 0 0 2px; font-size: 1.05rem; font-weight: 500; }
+.precio { font-size: 1.15rem; font-weight: 500; margin: 6px 0 4px; }
+.texto-mini { font-size: .8rem; color: var(--texto-suave); margin: 0; }
+.texto-suave { color: var(--texto-suave); }
+.cita-pie { margin-top: auto; padding-top: 16px; display: flex; justify-content: flex-end; }
+
+/* ---------- Botones y formularios ---------- */
+.boton {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--azul); color: #fff; border: none; border-radius: 4px;
+  padding: 9px 14px; font: inherit; font-size: .88rem; cursor: pointer;
+  transition: background .2s;
+}
+.boton:hover { background: var(--azul-oscuro); }
+.boton-ancho { width: 100%; justify-content: center; padding: 12px; }
+.boton-peligro { background: #fff; color: var(--rojo); border: 1.5px solid var(--rojo); }
+.boton-peligro:hover { background: var(--rojo); color: #fff; }
+.enlace { color: var(--azul); font-size: .9rem; }
+.volver { display: inline-block; margin-bottom: 14px; }
+
+input, select {
+  font: inherit; font-size: .95rem; padding: 10px 12px;
+  border: 1px solid var(--gris-borde); border-radius: 6px; background: #fff; width: 100%;
+}
+input:focus, select:focus { outline: 2px solid var(--azul-claro); border-color: var(--azul); }
+
+.formulario { display: grid; gap: 16px; }
+.formulario label { display: grid; gap: 6px; font-size: .9rem; color: var(--texto-suave); }
+.formulario-doble { grid-template-columns: 1fr 1fr; padding: 20px 4px 0; }
+.campo-completo { grid-column: 1 / -1; }
+.derecha { display: flex; justify-content: flex-end; }
+
+/* ---------- Alertas ---------- */
+.alerta { padding: 10px 14px; border-radius: 6px; margin-bottom: 14px; font-size: .9rem; }
+.alerta-error { background: #fdecea; color: var(--rojo); }
+.alerta-ok { background: var(--azul-claro); color: var(--azul-oscuro); }
+
+/* ---------- Login ---------- */
+.login { max-width: 420px; margin: 10px auto 20px; border: 1.5px solid var(--azul); border-radius: 8px; overflow: hidden; }
+.login-banner { height: 140px; background: #cfd8e3 center/cover; display: grid; place-items: center; }
+.login-cuerpo { padding: 24px; }
+.login h1 { font-size: 1.3rem; font-weight: 500; margin: 0 0 4px; }
+
+/* ---------- Ficha del paciente ---------- */
+.ficha { display: grid; grid-template-columns: 320px 1fr; gap: 28px; border: 1.5px solid var(--azul); border-radius: 8px; padding: 24px; margin-bottom: 20px; }
+.ficha-foto img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; background: var(--gris-seccion); }
+.ficha h1 { margin: 10px 0 16px; font-weight: 500; }
+.ficha dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ficha dt { font-size: .8rem; color: var(--texto-suave); }
+.ficha dd { margin: 2px 0 0; font-size: 1rem; }
+.ficha-acciones { display: flex; gap: 10px; margin-top: 24px; }
+
+.pie { text-align: center; font-size: .78rem; color: var(--texto-suave); padding-top: 10px; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 700px) {
+  .tarjeta { padding: 18px 16px; border-radius: 18px; }
+  .marca-nombre { font-size: 1rem; }
+  .portada { height: 150px; }
+  .portada-logo { width: 100px; left: 12px; }
+  .portada-logo .logo-grande { width: 84px; height: 84px; }
+  .portada-logo .logo-grande svg { width: 48px; }
+  .ficha, .formulario-doble { grid-template-columns: 1fr; }
+}

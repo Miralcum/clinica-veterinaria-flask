@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titulo %}{{ p.nombre }} · Patitas{% endblock %}
+{% block contenido %}
+<a href="{{ url_for('inicio') }}" class="enlace volver">← Volver a pacientes</a>
+
+<section class="ficha">
+  <div class="ficha-foto">
+    <img src="{{ url_for('static', filename='img/' ~ p.foto) }}" alt="Foto de {{ p.nombre }}"
+         onerror="this.src='{{ url_for('static', filename='img/sin_foto.svg') }}'">
+  </div>
+  <div class="ficha-datos">
+    <span class="etiqueta etiqueta-fija">Paciente #{{ p.id }}</span>
+    <h1>{{ p.nombre }}</h1>
+    <dl>
+      <div><dt>Tipo de animal</dt><dd>{{ p.tipo }}</dd></div>
+      <div><dt>Servicio</dt><dd>{{ p.servicio }}</dd></div>
+      <div><dt>Fecha</dt><dd>{{ p.fecha }}</dd></div>
+      <div><dt>Hora</dt><dd>{{ p.hora }}</dd></div>
+      <div><dt>Costo</dt><dd class="precio">${{ "{:,.2f}".format(p.costo) }}</dd></div>
+    </dl>
+    <div class="ficha-acciones">
+      <a href="{{ url_for('editar', pid=p.id) }}" class="boton">Editar</a>
+      <form method="post" action="{{ url_for('eliminar', pid=p.id) }}"
+            onsubmit="return confirm('¿Eliminar a {{ p.nombre }}? Esta acción no se puede deshacer.');">
+        <button class="boton boton-peligro">Eliminar</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

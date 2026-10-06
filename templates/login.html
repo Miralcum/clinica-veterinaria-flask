@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "macros.html" import logo %}
+{% block titulo %}Iniciar sesión · Patitas{% endblock %}
+{% block contenido %}
+<section class="login">
+  <div class="login-banner" style="background-image:url('{{ url_for('static', filename='img/banner.jpg') }}')">
+    {{ logo('logo-grande') }}
+  </div>
+  <div class="login-cuerpo">
+    <h1>Clínica Veterinaria Patitas</h1>
+    <p class="texto-suave">Acceso exclusivo para el personal del turno.</p>
+    <form method="post" class="formulario">
+      <label>Usuario
+        <input type="text" name="usuario" required autofocus autocomplete="username">
+      </label>
+      <label>Contraseña
+        <input type="password" name="password" required autocomplete="current-password">
+      </label>
+      <button type="submit" class="boton boton-ancho">Entrar</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% from "macros.html" import logo %}
+{% block contenido %}
+<section class="portada" style="background-image:url('{{ url_for('static', filename='img/banner.jpg') }}')">
+  <div class="portada-logo">{{ logo('logo-grande') }}</div>
+  <div class="portada-acciones">
+    <a href="{{ url_for('nuevo') }}" class="circulo" title="Registrar paciente">+</a>
+    <a href="{{ url_for('exportar') }}" class="circulo" title="Exportar a Excel">
+      <svg class="icono" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+    </a>
+  </div>
+</section>
+
+<h2 class="subtitulo">¿Buscas a un paciente en particular?</h2>
+<div class="avatares">
+  {% for d in destacados %}
+  <a href="{{ url_for('ficha', pid=d.id) }}" class="avatar">
+    <img src="{{ url_for('static', filename='img/' ~ d.foto) }}" alt="{{ d.nombre }}"
+         onerror="this.src='{{ url_for('static', filename='img/sin_foto.svg') }}'">
+    <span>{{ d.nombre }}</span>
+  </a>
+  {% endfor %}
+</div>
+
+<form class="filtros" method="get">
+  <input type="search" name="q" value="{{ q }}" placeholder="Buscar por nombre o servicio…">
+  <select name="tipo">
+    <option value="">Todos los animales</option>
+    {% for t in tipos %}<option {% if t == tipo %}selected{% endif %}>{{ t }}</option>{% endfor %}
+  </select>
+  <button class="boton">Buscar</button>
+  {% if q or tipo %}<a href="{{ url_for('inicio') }}" class="enlace">Limpiar</a>{% endif %}
+</form>
+
+<details class="seccion" open>
+  <summary>Citas registradas ({{ pacientes|length }}) <span class="signo"></span></summary>
+  <div class="rejilla">
+    {% for p in pacientes %}
+    <article class="cita {% if p.servicio == 'Vacunación' %}cita-etiqueta{% endif %}">
+      {% if p.servicio == 'Vacunación' %}<span class="etiqueta">Campaña de vacunación</span>{% endif %}
+      <div class="cita-cabeza">
+        <img src="{{ url_for('static', filename='img/' ~ p.foto) }}" alt="{{ p.nombre }}"
+             onerror="this.src='{{ url_for('static', filename='img/sin_foto.svg') }}'">
+        <div>
+          <h3>{{ p.nombre }}</h3>
+          <p class="texto-mini">{{ p.tipo }} · {{ p.fecha }} · {{ p.hora }}</p>
+        </div>
+      </div>
+      <p class="precio">${{ "{:,.2f}".format(p.costo) }}</p>
+      <p class="texto-mini">{{ p.servicio }}</p>
+      <div class="cita-pie">
+        <a href="{{ url_for('ficha', pid=p.id) }}" class="boton">
+          <svg class="icono" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
+          Ver ficha
+        </a>
+      </div>
+    </article>
+    {% else %}
+    <p class="texto-suave">No hay pacientes que coincidan con la búsqueda.</p>
+    {% endfor %}
+  </div>
+</details>
+{% endblock %}

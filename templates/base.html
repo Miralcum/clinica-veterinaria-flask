@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Clínica Veterinaria Patitas{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+  {% from "macros.html" import logo %}
+
+  <div class="fondo">
+    <main class="tarjeta">
+      {% if session.usuario_id %}
+      <header class="encabezado">
+        <a href="{{ url_for('inicio') }}" class="marca">
+          {{ logo() }}
+          <span class="marca-nombre">Clínica Veterinaria Patitas</span>
+        </a>
+        <details class="menu-usuario">
+          <summary>
+            <svg class="icono" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            {{ session.nombre }}
+            <svg class="icono flecha" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="menu-opciones">
+            <a href="{{ url_for('nuevo') }}">Registrar paciente</a>
+            <a href="{{ url_for('exportar') }}">Exportar a Excel (CSV)</a>
+            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+          </div>
+        </details>
+      </header>
+      {% endif %}
+
+      {% with mensajes = get_flashed_messages(with_categories=true) %}
+        {% for cat, msg in mensajes %}
+          <div class="alerta alerta-{{ cat }}">{{ msg }}</div>
+        {% endfor %}
+      {% endwith %}
+
+      {% block contenido %}{% endblock %}
+
+      <footer class="pie">Hecho por Marlene · UACJ</footer>
+    </main>
+  </div>
+</body>
+</html>

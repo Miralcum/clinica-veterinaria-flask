@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Registrar paciente' if modo == 'nuevo' else 'Editar paciente' }} · Patitas{% endblock %}
+{% block contenido %}
+<a href="{{ url_for('inicio') }}" class="enlace volver">← Volver a pacientes</a>
+
+<details class="seccion" open>
+  <summary>{{ 'Registrar nuevo paciente' if modo == 'nuevo' else 'Editar a ' ~ p.nombre }} <span class="signo"></span></summary>
+  <form method="post" enctype="multipart/form-data" class="formulario formulario-doble">
+    <label>Nombre de la mascota
+      <input type="text" name="nombre" value="{{ p.nombre or '' }}" required maxlength="60">
+    </label>
+    <label>Tipo de animal
+      <select name="tipo" required>
+        <option value="">Selecciona…</option>
+        {% for t in tipos %}<option {% if p.tipo == t %}selected{% endif %}>{{ t }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Servicio
+      <select name="servicio" required>
+        <option value="">Selecciona…</option>
+        {% for s in servicios %}<option {% if p.servicio == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Costo (MXN)
+      <input type="number" name="costo" value="{{ p.costo or '' }}" min="0" step="0.01" required>
+    </label>
+    <label>Fecha
+      <input type="date" name="fecha" value="{{ p.fecha or '' }}" required>
+    </label>
+    <label>Hora
+      <input type="time" name="hora" value="{{ p.hora or '' }}" required>
+    </label>
+    <label class="campo-completo">Fotografía {% if modo == 'editar' %}<span class="texto-mini">(déjalo vacío para conservar la actual)</span>{% endif %}
+      <input type="file" name="foto" accept=".jpg,.jpeg,.png,.webp" {% if modo == 'nuevo' %}required{% endif %}>
+    </label>
+    <div class="campo-completo derecha">
+      <button type="submit" class="boton">+ {{ 'Registrar paciente' if modo == 'nuevo' else 'Guardar cambios' }}</button>
+    </div>
+  </form>
+</details>
+{% endblock %}
